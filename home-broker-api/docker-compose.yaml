@@ -1,0 +1,16 @@
+services:
+  database:
+    image: 'bitnami/mongodb:6.0.9'
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    restart: always
+    environment:
+      - MONGODB_ROOT_PASSWORD=1234
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_NAME=rs0
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_ADVERTISED_HOSTNAME=localhost
+      - MONGODB_DISABLE_SYSTEM_LOG=false
+      - MONGODB_ENABLE_DIRECTORY_PER_DB=true
+      - MONGODB_DATABASE=test
