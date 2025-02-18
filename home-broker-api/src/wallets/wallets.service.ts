@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import type { Model } from 'mongoose';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import type { Connection, Model } from 'mongoose';
 import type { CreateWalletAssetDto } from './dto/create-wallet-asset.dto';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { WalletAsset } from './entities/wallet-asset.entity';
@@ -13,6 +13,7 @@ export class WalletsService {
     private readonly walletModel: Model<WalletDocument>,
     @InjectModel(WalletAsset.name)
     private readonly walletAssetModel: Model<WalletAsset>,
+    @InjectConnection() private readonly connection: Connection,
   ) {}
 
   create(createWalletDto: CreateWalletDto) {
@@ -24,18 +25,51 @@ export class WalletsService {
   }
 
   findOne(id: string) {
-    return this.walletModel.findById(id);
+    return this.walletModel.findById(id).populate([
+      {
+        path: 'assets',
+        populate: 'asset',
+      },
+    ]);
   }
 
-  createWalletAsset({
+  async createWalletAsset({
     assetId: asset,
     walletId: wallet,
     shares,
   }: CreateWalletAssetDto) {
-    return this.walletAssetModel.create({
-      wallet,
-      asset,
-      shares,
-    });
+    const session = await this.connection.startSession();
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    await session.startTransaction();
+    try {
+      const [walletAsset] = await this.walletAssetModel.create(
+        [
+          {
+            wallet,
+            asset,
+            shares,
+          },
+        ],
+        { session },
+      );
+      await this.walletModel.updateOne(
+        {
+          _id: wallet,
+        },
+        {
+          $push: {
+            assets: walletAsset._id,
+          },
+        },
+        { session },
+      );
+      await session.commitTransaction();
+      return walletAsset;
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      await session.endSession();
+    }
   }
 }

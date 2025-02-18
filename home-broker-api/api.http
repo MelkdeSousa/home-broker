@@ -43,3 +43,7 @@ Content-Type: application/json
 ###
 # @name getOrders
 GET http://localhost:3000/orders?walletId={{walletId}}
+
+###
+# @name getWallets
+GET http://localhost:3000/wallets/{{walletId}}
