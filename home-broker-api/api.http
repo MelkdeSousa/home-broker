@@ -8,11 +8,20 @@ Content-Type: application/json
     "price":100
 }
 
-###
-# @name getAssets
-GET http://localhost:3000/assets
 
 ###
-# @name getAsset
-@assetSymbol = {{createAsset.response.body.symbol}}
-GET http://localhost:3000/assets/{{assetSymbol}}
+# @name createWallet
+POST http://localhost:3000/wallets
+Content-Type: application/json
+
+###
+# @name createWalletAsset
+@walletId = {{createWallet.response.body._id}}
+@assetId = {{createAsset.response.body._id}}
+POST http://localhost:3000/wallets/{{walletId}}/assets
+Content-Type: application/json
+
+{
+    "assetId":"{{assetId}}",
+    "shares":10
+}
