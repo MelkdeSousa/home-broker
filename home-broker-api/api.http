@@ -1,8 +1,18 @@
+# @name createAsset
 POST http://localhost:3000/assets
 Content-Type: application/json
 
 {
-    "name":"Amazon",
-    "symbol":"AMZ1",
+    "name":"Google",
+    "symbol":"GOOGL",
     "price":100
 }
+
+###
+# @name getAssets
+GET http://localhost:3000/assets
+
+###
+# @name getAsset
+@assetSymbol = {{createAsset.response.body.symbol}}
+GET http://localhost:3000/assets/{{assetSymbol}}
