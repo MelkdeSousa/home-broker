@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
+import type { Asset } from '../assets/entities/asset.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import type { FindAllOrderDto } from './dto/find-all-order.dto';
 import { Order, OrderStatus } from './entities/order.entity';
@@ -10,7 +11,7 @@ export class OrdersService {
   constructor(
     @InjectModel(Order.name)
     private readonly orderModel: Model<Order>,
-  ) {}
+  ) { }
 
   create({
     assetId: asset,
@@ -26,7 +27,7 @@ export class OrdersService {
   }
 
   findAll(filter: FindAllOrderDto) {
-    return this.orderModel.find(filter);
+    return this.orderModel.find(filter).populate('asset') as Promise<(Order & { asset: Asset })[]>;
   }
 
   findOne(id: string) {

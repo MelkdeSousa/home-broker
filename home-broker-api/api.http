@@ -2,12 +2,24 @@
 POST http://localhost:3000/assets
 Content-Type: application/json
 
-{
-    "name":"Google",
-    "symbol":"GOOGL",
-    "price":100
-}
-
+# {
+#     "name":"Google",
+#     "symbol":"GOOGL",
+#     "price":100,
+#     "image":"https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+# }
+# {
+#     "name":"Apple",
+#     "symbol":"AAPL",
+#     "price":100,
+#     "image":"https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+# }
+# {
+#     "name":"Microsoft",
+#     "symbol":"MSFT",
+#     "price":100,
+#     "image":"https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+# }
 
 ###
 # @name createWallet
@@ -45,5 +57,9 @@ Content-Type: application/json
 GET http://localhost:3000/orders?walletId={{walletId}}
 
 ###
-# @name getWallets
+# @name getWallet
 GET http://localhost:3000/wallets/{{walletId}}
+
+###
+# @name getWallets
+GET http://localhost:3000/wallets
