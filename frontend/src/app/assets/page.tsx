@@ -1,4 +1,4 @@
-import type { Asset as AssetModel } from "@/api/models";
+import type { AssetModel } from "@/api/models";
 import Asset from "@/components/Asset";
 import {
 	Button,
