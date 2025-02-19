@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { OrdersService } from './orders.service';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import { CreateOrderDto } from './dto/create-order.dto'
+import { OrdersService } from './orders.service'
 
 @Controller('orders')
 export class OrdersController {
@@ -8,16 +8,19 @@ export class OrdersController {
 
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+    return this.ordersService.create(createOrderDto)
   }
 
   @Get()
   findAll(@Query('walletId') walletId: string) {
-    return this.ordersService.findAll({ wallet: walletId });
+    return this.ordersService.findAll({ wallet: walletId })
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(id);
+  findOne(
+    @Param('id')
+    id: string,
+  ) {
+    return this.ordersService.findOne(id)
   }
 }

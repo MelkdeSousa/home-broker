@@ -1,5 +1,5 @@
 export class CreateWalletAssetDto {
-  walletId: string;
-  assetId: string;
-  shares: number;
+  walletId: string
+  assetId: string
+  shares: number
 }

@@ -1,24 +1,24 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import type { HydratedDocument } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import type { HydratedDocument } from 'mongoose'
 
 @Schema({ timestamps: true })
 export class Asset {
   @Prop({ unique: true, index: true })
-  name: string;
+  name: string
 
   @Prop({ unique: true, index: true })
-  symbol: string;
+  symbol: string
 
   @Prop()
-  image: string;
+  image: string
 
   @Prop()
-  price: number;
+  price: number
 
-  createdAt!: Date;
-  updatedAt!: Date;
+  createdAt!: Date
+  updatedAt!: Date
 }
 
-export type AssetDocument = HydratedDocument<Asset>;
+export type AssetDocument = HydratedDocument<Asset>
 
-export const AssetSchema = SchemaFactory.createForClass(Asset);
+export const AssetSchema = SchemaFactory.createForClass(Asset)

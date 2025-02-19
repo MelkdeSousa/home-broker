@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import type { Model } from 'mongoose';
-import { CreateAssetDto } from './dto/create-asset.dto';
-import { Asset } from './entities/asset.entity';
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import type { Model } from 'mongoose'
+import { CreateAssetDto } from './dto/create-asset.dto'
+import { Asset } from './entities/asset.entity'
 
 @Injectable()
 export class AssetsService {
@@ -12,14 +12,14 @@ export class AssetsService {
   ) {}
 
   create(createAssetDto: CreateAssetDto) {
-    return this.assetModel.create(createAssetDto);
+    return this.assetModel.create(createAssetDto)
   }
 
   findAll() {
-    return this.assetModel.find();
+    return this.assetModel.find()
   }
 
   findOne(symbol: string) {
-    return this.assetModel.findOne({ symbol });
+    return this.assetModel.findOne({ symbol })
   }
 }

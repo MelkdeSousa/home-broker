@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import type { Connection, Model } from 'mongoose';
-import type { CreateWalletAssetDto } from './dto/create-wallet-asset.dto';
-import { CreateWalletDto } from './dto/create-wallet.dto';
-import { WalletAsset } from './entities/wallet-asset.entity';
-import { Wallet, type WalletDocument } from './entities/wallet.entity';
+import { Injectable } from '@nestjs/common'
+import { InjectConnection, InjectModel } from '@nestjs/mongoose'
+import type { Connection, Model } from 'mongoose'
+import type { CreateWalletAssetDto } from './dto/create-wallet-asset.dto'
+import { CreateWalletDto } from './dto/create-wallet.dto'
+import { WalletAsset } from './entities/wallet-asset.entity'
+import { Wallet, type WalletDocument } from './entities/wallet.entity'
 
 @Injectable()
 export class WalletsService {
@@ -14,14 +14,14 @@ export class WalletsService {
     @InjectModel(WalletAsset.name)
     private readonly walletAssetModel: Model<WalletAsset>,
     @InjectConnection() private readonly connection: Connection,
-  ) { }
+  ) {}
 
   create(createWalletDto: CreateWalletDto) {
-    return this.walletModel.create(createWalletDto);
+    return this.walletModel.create(createWalletDto)
   }
 
   findAll() {
-    return this.walletModel.find();
+    return this.walletModel.find()
   }
 
   findOne(id: string) {
@@ -30,7 +30,7 @@ export class WalletsService {
         path: 'assets',
         populate: 'asset',
       },
-    ]);
+    ])
   }
 
   async createWalletAsset({
@@ -38,9 +38,9 @@ export class WalletsService {
     walletId: wallet,
     shares,
   }: CreateWalletAssetDto) {
-    const session = await this.connection.startSession();
+    const session = await this.connection.startSession()
     // eslint-disable-next-line @typescript-eslint/await-thenable
-    await session.startTransaction();
+    await session.startTransaction()
     try {
       const [walletAsset] = await this.walletAssetModel.create(
         [
@@ -51,7 +51,7 @@ export class WalletsService {
           },
         ],
         { session },
-      );
+      )
       await this.walletModel.updateOne(
         {
           _id: wallet,
@@ -62,14 +62,14 @@ export class WalletsService {
           },
         },
         { session },
-      );
-      await session.commitTransaction();
-      return walletAsset;
+      )
+      await session.commitTransaction()
+      return walletAsset
     } catch (error) {
-      await session.abortTransaction();
-      throw error;
+      await session.abortTransaction()
+      throw error
     } finally {
-      await session.endSession();
+      await session.endSession()
     }
   }
 }

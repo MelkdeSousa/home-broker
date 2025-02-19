@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { type HydratedDocument } from 'mongoose';
-import { WalletAsset, WalletAssetDocument } from './wallet-asset.entity';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import mongoose, { type HydratedDocument } from 'mongoose'
+import { WalletAsset, WalletAssetDocument } from './wallet-asset.entity'
 
 @Schema({ timestamps: true })
 export class Wallet {
@@ -9,12 +9,12 @@ export class Wallet {
     ref: WalletAsset.name,
     set: (v) => [...new Set(v)],
   })
-  assets: WalletAssetDocument[] | string[];
+  assets: WalletAssetDocument[] | string[]
 
-  createdAt!: Date;
-  updatedAt!: Date;
+  createdAt!: Date
+  updatedAt!: Date
 }
 
-export type WalletDocument = HydratedDocument<Wallet>;
+export type WalletDocument = HydratedDocument<Wallet>
 
-export const WalletSchema = SchemaFactory.createForClass(Wallet);
+export const WalletSchema = SchemaFactory.createForClass(Wallet)

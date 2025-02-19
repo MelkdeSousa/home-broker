@@ -1,17 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import type { Model } from 'mongoose';
-import type { Asset } from '../assets/entities/asset.entity';
-import { CreateOrderDto } from './dto/create-order.dto';
-import type { FindAllOrderDto } from './dto/find-all-order.dto';
-import { Order, OrderStatus } from './entities/order.entity';
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import type { Model } from 'mongoose'
+import type { Asset } from '../assets/entities/asset.entity'
+import { CreateOrderDto } from './dto/create-order.dto'
+import type { FindAllOrderDto } from './dto/find-all-order.dto'
+import { Order, OrderStatus } from './entities/order.entity'
 
 @Injectable()
 export class OrdersService {
   constructor(
     @InjectModel(Order.name)
     private readonly orderModel: Model<Order>,
-  ) { }
+  ) {}
 
   create({
     assetId: asset,
@@ -23,14 +23,16 @@ export class OrdersService {
       wallet,
       status: OrderStatus.PENDING,
       ...createOrderDto,
-    });
+    })
   }
 
   findAll(filter: FindAllOrderDto) {
-    return this.orderModel.find(filter).populate('asset') as Promise<(Order & { asset: Asset })[]>;
+    return this.orderModel.find(filter).populate('asset') as Promise<
+      (Order & { asset: Asset })[]
+    >
   }
 
   findOne(id: string) {
-    return this.orderModel.findById(id);
+    return this.orderModel.findById(id)
   }
 }
