@@ -14,7 +14,7 @@ export class WalletsService {
     @InjectModel(WalletAsset.name)
     private readonly walletAssetModel: Model<WalletAsset>,
     @InjectConnection() private readonly connection: Connection,
-  ) {}
+  ) { }
 
   create(createWalletDto: CreateWalletDto) {
     return this.walletModel.create(createWalletDto);
