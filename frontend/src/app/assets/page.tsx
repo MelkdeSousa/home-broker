@@ -10,6 +10,7 @@ import {
 	TableHeadCell,
 	TableRow,
 } from "flowbite-react";
+import Link from "next/link";
 
 export default async function ({
 	searchParams,
@@ -47,7 +48,14 @@ export default async function ({
 								</TableCell>
 								<TableCell>R$ {asset.price}</TableCell>
 								<TableCell>
-									<Button color="light">Comprar/Vender</Button>
+									<Button
+										className="w-fit"
+										color="light"
+										as={Link}
+										href={`/assets/${asset.symbol}?walletId=${walletId}`}
+									>
+										Comprar/Vender
+									</Button>
 								</TableCell>
 							</TableRow>
 						))}

@@ -1,4 +1,5 @@
 import Navbar from "@/components/NavBar";
+import ToastContainer from "@/components/ToastContainer";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -17,6 +18,7 @@ export default function RootLayout({
 			<body className="h-screen flex flex-col">
 				<Navbar />
 				<div className="container mx-auto flex flex-grow px-4">{children}</div>
+				<ToastContainer />
 			</body>
 		</html>
 	);
