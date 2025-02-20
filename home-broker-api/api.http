@@ -8,18 +8,19 @@ Content-Type: application/json
 #     "price":100,
 #     "image":"https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
 # }
+
 # {
 #     "name":"Apple",
 #     "symbol":"AAPL",
 #     "price":100,
-#     "image":"https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+#     "image":"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngimg.com%2Fuploads%2Fapple_logo%2Fapple_logo_PNG19674.png&f=1&nofb=1&ipt=95deef4f2a86e4db380635266f2eb9f0bd5acbffa4d5939409a21d2cd7833cd7&ipo=images"
 # }
-# {
-#     "name":"Microsoft",
-#     "symbol":"MSFT",
-#     "price":100,
-#     "image":"https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-# }
+{
+    "name":"Microsoft",
+    "symbol":"MSFT",
+    "price":100,
+    "image":"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HolI6Jw4xVkeYu1zJZWq7QHaCS%26pid%3DApi&f=1&ipt=0b5685c7350a1f8bffd1b5f59c5347c22b7dd56f290b7985d4d02ca68601e1f4&ipo=images"
+}
 
 ###
 # @name createWallet

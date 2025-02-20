@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+} from '@nestjs/common'
 import type { CreateWalletAssetDto } from './dto/create-wallet-asset.dto'
 import { CreateWalletDto } from './dto/create-wallet.dto'
 import { WalletsService } from './wallets.service'
@@ -19,7 +26,13 @@ export class WalletsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.walletsService.findOne(id)
+    const wallet = this.walletsService.findOne(id)
+
+    if (!wallet) {
+      throw new NotFoundException('Wallet not found')
+    }
+
+    return wallet
   }
 
   @Post(':id/assets')
