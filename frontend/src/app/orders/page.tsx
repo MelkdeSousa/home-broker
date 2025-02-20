@@ -1,4 +1,4 @@
-import type { OrderModel } from "@/api/models";
+import { getMyWallet, getOrders } from "@/api/queries";
 import Asset from "@/components/Asset";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
 import OrderTypeBadge from "@/components/OrderTypeBadge";
@@ -11,13 +11,6 @@ import {
 	TableHeadCell,
 	TableRow,
 } from "flowbite-react";
-
-export async function getOrders(walletId: string): Promise<OrderModel[]> {
-	const response = await fetch(
-		`http://localhost:3000/orders?walletId=${walletId}`,
-	);
-	return response.json();
-}
 
 export default async function ({
 	searchParams,

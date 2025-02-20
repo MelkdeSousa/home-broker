@@ -1,15 +1,11 @@
-import { type AssetModel, OrderType } from "@/api/models";
+import { OrderType } from "@/api/models";
+import { getAsset, getMyWallet } from "@/api/queries";
 import Asset from "@/components/Asset";
 import AssetChart from "@/components/AssetChart";
 import OrderForm from "@/components/OrderForm";
 import TabsItem from "@/components/TabsItem";
 import { WalletList } from "@/components/WalletList";
 import { Card, Tabs } from "flowbite-react";
-
-export async function getAsset(symbol: string): Promise<AssetModel> {
-	const response = await fetch(`http://localhost:3000/assets/${symbol}`);
-	return response.json();
-}
 
 type Props = {
 	params: Promise<{ assetSymbol: string }>;

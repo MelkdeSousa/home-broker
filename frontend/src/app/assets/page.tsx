@@ -1,4 +1,4 @@
-import type { AssetModel } from "@/api/models";
+import { getAssets, getMyWallet } from "@/api/queries";
 import Asset from "@/components/Asset";
 import { WalletList } from "@/components/WalletList";
 import {
