@@ -3,6 +3,7 @@ import Asset from "@/components/Asset";
 import AssetChart from "@/components/AssetChart";
 import OrderForm from "@/components/OrderForm";
 import TabsItem from "@/components/TabsItem";
+import { WalletList } from "@/components/WalletList";
 import { Card, Tabs } from "flowbite-react";
 
 export async function getAsset(symbol: string): Promise<AssetModel> {
@@ -18,6 +19,17 @@ type Props = {
 export default async function ({ params, searchParams }: Props) {
 	const { assetSymbol } = await params;
 	const { walletId } = await searchParams;
+
+	if (!walletId) {
+		return <WalletList />;
+	}
+
+	const wallet = await getMyWallet(walletId);
+
+	if (!wallet) {
+		return <WalletList />;
+	}
+
 	const asset = await getAsset(assetSymbol);
 
 	return (

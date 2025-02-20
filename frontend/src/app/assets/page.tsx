@@ -1,5 +1,6 @@
 import type { AssetModel } from "@/api/models";
 import Asset from "@/components/Asset";
+import { WalletList } from "@/components/WalletList";
 import {
 	Button,
 	Table,
@@ -10,12 +11,20 @@ import {
 	TableRow,
 } from "flowbite-react";
 
-export async function getAssets(): Promise<AssetModel[]> {
-	const response = await fetch("http://localhost:3000/assets");
-	return response.json();
-}
+export default async function ({
+	searchParams,
+}: { searchParams: Promise<{ walletId: string }> }) {
+	const { walletId } = await searchParams;
+	if (!walletId) {
+		return <WalletList />;
+	}
 
-export default async function () {
+	const wallet = await getMyWallet(walletId);
+
+	if (!wallet) {
+		return <WalletList />;
+	}
+
 	const assets = await getAssets();
 
 	return (

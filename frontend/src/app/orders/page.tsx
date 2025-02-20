@@ -2,6 +2,7 @@ import type { OrderModel } from "@/api/models";
 import Asset from "@/components/Asset";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
 import OrderTypeBadge from "@/components/OrderTypeBadge";
+import { WalletList } from "@/components/WalletList";
 import {
 	Table,
 	TableBody,
@@ -22,6 +23,16 @@ export default async function ({
 	searchParams,
 }: { searchParams: Promise<{ walletId: string }> }) {
 	const { walletId } = await searchParams;
+	if (!walletId) {
+		return <WalletList />;
+	}
+
+	const wallet = await getMyWallet(walletId);
+
+	if (!wallet) {
+		return <WalletList />;
+	}
+
 	const orders = await getOrders(walletId);
 
 	return (
