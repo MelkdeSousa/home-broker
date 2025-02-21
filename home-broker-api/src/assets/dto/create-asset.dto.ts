@@ -4,3 +4,9 @@ export class CreateAssetDto {
   image: string
   price: number
 }
+
+export class CreateAssetDailyDto {
+  date: Date
+  price: number
+  symbol: string
+}

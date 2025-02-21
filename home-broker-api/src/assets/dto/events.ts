@@ -6,6 +6,8 @@ export const JOIN_ASSETS = 'join/assets'
 export const LEAVE_ASSET = 'leave/asset'
 export const LEAVE_ASSETS = 'leave/assets'
 
+export const ASSET_DAILY_CREATED = 'asset-daily/created'
+
 export class JoinLeaveAssetsDto {
   symbols: string[]
 }

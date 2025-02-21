@@ -6,8 +6,10 @@ import {
   WebSocketGateway,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
+import type { AssetDailiesService } from './asset-dailies.service'
 import { AssetsService } from './assets.service'
 import {
+  ASSET_DAILY_CREATED,
   ASSET_PRICE_CHANGED,
   JOIN_ASSET,
   JOIN_ASSETS,
@@ -16,6 +18,7 @@ import {
   LEAVE_ASSET,
   LEAVE_ASSETS,
 } from './dto/events'
+import type { AssetDaily } from './entities/asset-daily.entity'
 import { Asset } from './entities/asset.entity'
 
 @WebSocketGateway({ cors: true })
@@ -23,7 +26,10 @@ export class AssetsGateway implements OnGatewayInit {
   private readonly logger = new Logger(AssetsGateway.name)
   private _server: Server
 
-  constructor(private readonly assetsService: AssetsService) {}
+  constructor(
+    private readonly assetsService: AssetsService,
+    private readonly assetDailiesService: AssetDailiesService,
+  ) {}
 
   @OnEvent(ASSET_PRICE_CHANGED)
   handlePriceChange(asset: Asset) {
@@ -31,8 +37,17 @@ export class AssetsGateway implements OnGatewayInit {
     this._server.to(asset.symbol).emit(ASSET_PRICE_CHANGED, asset)
   }
 
+  @OnEvent(ASSET_DAILY_CREATED)
+  handleAssetDailyCreated(assetDaily: AssetDaily & { asset: Asset }) {
+    this.logger.log(`Asset daily created for asset ${assetDaily.asset.symbol}`)
+    this._server
+      .to(assetDaily.asset.symbol)
+      .emit(ASSET_DAILY_CREATED, assetDaily)
+  }
+
   afterInit(server: Server) {
     this.assetsService.onPriceChange()
+    this.assetDailiesService.onCreate()
     this._server = server
   }
 
