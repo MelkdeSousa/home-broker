@@ -1,4 +1,9 @@
-import type { AssetModel, OrderModel, WalletModel } from "./models";
+import type {
+	AssetDailyModel,
+	AssetModel,
+	OrderModel,
+	WalletModel,
+} from "./models";
 
 export async function getMyWallet(
 	walletId: string,
@@ -31,5 +36,14 @@ export async function getAsset(symbol: string): Promise<AssetModel> {
 
 export async function getWallets(): Promise<WalletModel[]> {
 	const response = await fetch("http://localhost:3000/wallets");
+	return response.json();
+}
+
+export async function getAssetDailies(
+	symbol: string,
+): Promise<AssetDailyModel[]> {
+	const response = await fetch(
+		`http://localhost:3000/assets/${symbol}/dailies`,
+	);
 	return response.json();
 }
