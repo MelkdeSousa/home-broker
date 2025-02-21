@@ -1,16 +1,8 @@
 import { getMyWallet } from "@/api/queries";
-import Asset from "@/components/Asset";
+import AssetsSync from "@/components/AssetsSync";
+import WalletAssetTableRow from "@/components/WalletAssetTableRow";
 import { WalletList } from "@/components/WalletList";
-import {
-	Button,
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeadCell,
-	TableRow,
-} from "flowbite-react";
-import Link from "next/link";
+import { Table, TableBody, TableHead, TableHeadCell } from "flowbite-react";
 
 export default async function MyWalletList({
 	searchParams,
@@ -41,26 +33,18 @@ export default async function MyWalletList({
 					</TableHead>
 					<TableBody>
 						{wallet.assets.map((walletAsset) => (
-							<TableRow key={walletAsset._id}>
-								<TableCell>
-									<Asset asset={walletAsset.asset} />
-								</TableCell>
-								<TableCell>R$ {walletAsset.asset.price}</TableCell>
-								<TableCell>{walletAsset.shares}</TableCell>
-								<TableCell>
-									<Button
-										color="light"
-										as={Link}
-										href={`/assets/${walletAsset.asset.symbol}?walletId=${walletId}`}
-									>
-										Comprar/Vender
-									</Button>
-								</TableCell>
-							</TableRow>
+							<WalletAssetTableRow
+								key={walletAsset._id}
+								walletAsset={walletAsset}
+								walletId={wallet._id}
+							/>
 						))}
 					</TableBody>
 				</Table>
 			</div>
+			<AssetsSync
+				symbols={wallet.assets.map(({ asset: { symbol } }) => symbol)}
+			/>
 		</div>
 	);
 }
