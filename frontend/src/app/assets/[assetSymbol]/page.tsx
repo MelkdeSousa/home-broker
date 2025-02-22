@@ -32,7 +32,7 @@ export default async function ({ params, searchParams }: Props) {
 	const assetDailies = await getAssetDailies(assetSymbol);
 
 	const chartData = assetDailies.map((daily) => ({
-		time: (Date.parse(daily.date) / 1000).toFixed(0) as Time,
+		time: (Date.parse(daily.date) / 1000) as Time,
 		value: daily.price,
 	}));
 

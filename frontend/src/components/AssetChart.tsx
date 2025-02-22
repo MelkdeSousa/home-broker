@@ -23,7 +23,7 @@ export default function ({ asset, data }: Props) {
 		socket.emit(SocketEvents.JOIN_ASSET, { symbol });
 		socket.on(SocketEvents.ASSET_DAILY_CREATED, (daily: AssetDailyModel) => {
 			chartRef.current?.update({
-				time: (Date.parse(daily.date) / 1000).toFixed(0) as Time,
+				time: (Date.parse(daily.date) / 1000) as Time,
 				value: daily.price,
 			});
 		});
