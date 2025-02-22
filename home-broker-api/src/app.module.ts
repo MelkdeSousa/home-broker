@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { AssetDailiesService } from './assets/asset-dailies.service'
 import { AssetsModule } from './assets/assets.module'
 import { OrdersModule } from './orders/orders.module'
 import { WalletsModule } from './wallets/wallets.module'
@@ -17,6 +16,6 @@ import { WalletsModule } from './wallets/wallets.module'
     OrdersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AssetDailiesService],
+  providers: [AppService],
 })
 export class AppModule {}

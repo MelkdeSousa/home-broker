@@ -6,7 +6,7 @@ import {
   WebSocketGateway,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
-import type { AssetDailiesService } from './asset-dailies.service'
+import { AssetDailiesService } from './asset-dailies.service'
 import { AssetsService } from './assets.service'
 import {
   ASSET_DAILY_CREATED,
@@ -18,7 +18,7 @@ import {
   LEAVE_ASSET,
   LEAVE_ASSETS,
 } from './dto/events'
-import type { AssetDaily } from './entities/asset-daily.entity'
+import { AssetDaily } from './entities/asset-daily.entity'
 import { Asset } from './entities/asset.entity'
 
 @WebSocketGateway({ cors: true })
@@ -39,10 +39,12 @@ export class AssetsGateway implements OnGatewayInit {
 
   @OnEvent(ASSET_DAILY_CREATED)
   handleAssetDailyCreated(assetDaily: AssetDaily & { asset: Asset }) {
-    this.logger.log(`Asset daily created for asset ${assetDaily.asset.symbol}`)
     this._server
       .to(assetDaily.asset.symbol)
       .emit(ASSET_DAILY_CREATED, assetDaily)
+    this.logger.log(
+      `Daily data created for asset ${assetDaily.asset.symbol} on ${assetDaily.date}`,
+    )
   }
 
   afterInit(server: Server) {
@@ -68,40 +70,37 @@ export class AssetsGateway implements OnGatewayInit {
   }
 
   @SubscribeMessage(JOIN_ASSET)
-  handleJoinAsset(client: Socket, payload: string) {
-    const asset = JSON.parse(payload) as JoinLeaveAssetDto
-    if (!asset.symbol) {
+  handleJoinAsset(client: Socket, payload: JoinLeaveAssetDto) {
+    if (!payload.symbol) {
       return
     }
 
-    client.join(asset.symbol)
-    this.logger.log(`Client ${client.id} joined asset ${asset.symbol}`)
+    client.join(payload.symbol)
+    this.logger.log(`Client ${client.id} joined asset ${payload.symbol}`)
   }
 
   @SubscribeMessage(LEAVE_ASSETS)
-  handleLeaveAssets(client: Socket, payload: string) {
-    const assets = JSON.parse(payload) as JoinLeaveAssetsDto
-    if (!assets.symbols?.length) {
+  handleLeaveAssets(client: Socket, payload: JoinLeaveAssetsDto) {
+    if (!payload.symbols?.length) {
       return
     }
 
-    assets.symbols.forEach((symbol) => {
+    payload.symbols.forEach((symbol) => {
       client.leave(symbol)
     })
 
     this.logger.log(
-      `Client ${client.id} left assets ${assets.symbols.join(', ')}`,
+      `Client ${client.id} left assets ${payload.symbols.join(', ')}`,
     )
   }
 
   @SubscribeMessage(LEAVE_ASSET)
-  handleLeaveAsset(client: Socket, payload: string) {
-    const asset = JSON.parse(payload) as JoinLeaveAssetDto
-    if (!asset.symbol) {
+  handleLeaveAsset(client: Socket, payload: JoinLeaveAssetDto) {
+    if (!payload.symbol) {
       return
     }
 
-    client.leave(asset.symbol)
-    this.logger.log(`Client ${client.id} left asset ${asset.symbol}`)
+    client.leave(payload.symbol)
+    this.logger.log(`Client ${client.id} left asset ${payload.symbol}`)
   }
 }

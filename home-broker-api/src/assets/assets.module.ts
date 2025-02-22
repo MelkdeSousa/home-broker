@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { MongooseModule } from '@nestjs/mongoose'
 import { AssetDailiesController } from './asset-dailies.controller'
+import { AssetDailiesService } from './asset-dailies.service'
 import { AssetsController } from './assets.controller'
 import { AssetsGateway } from './assets.gateway'
 import { AssetsService } from './assets.service'
@@ -10,6 +11,7 @@ import { Asset, AssetSchema } from './entities/asset.entity'
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     MongooseModule.forFeature([
       {
         name: Asset.name,
@@ -20,9 +22,8 @@ import { Asset, AssetSchema } from './entities/asset.entity'
         schema: AssetDailySchema,
       },
     ]),
-    EventEmitterModule.forRoot(),
   ],
   controllers: [AssetsController, AssetDailiesController],
-  providers: [AssetsService, AssetsGateway],
+  providers: [AssetsService, AssetDailiesService, AssetsGateway],
 })
 export class AssetsModule {}
