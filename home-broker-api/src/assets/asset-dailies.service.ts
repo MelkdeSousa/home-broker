@@ -4,10 +4,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { CreateAssetDailyDto } from './dto/create-asset.dto'
 import { ASSET_DAILY_CREATED } from './dto/events'
-import {
-  AssetDaily,
-  type AssetDailyDocument,
-} from './entities/asset-daily.entity'
+import { AssetDaily, AssetDailyDocument } from './entities/asset-daily.entity'
 import { Asset } from './entities/asset.entity'
 
 @Injectable()
@@ -24,7 +21,7 @@ export class AssetDailiesService {
     const asset = await this.assetModel.findOne({ symbol })
     return this.assetDailyModel
       .find({ asset: asset?._id })
-      .sort({ date: -1 })
+      .sort({ date: 1 })
       .populate('asset')
   }
 

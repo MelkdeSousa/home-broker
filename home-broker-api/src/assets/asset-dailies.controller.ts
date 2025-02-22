@@ -8,7 +8,7 @@ export class AssetDailiesController {
 
   @Get()
   findAll(
-    @Param()
+    @Param('symbol')
     symbol: string,
   ) {
     return this.assetDailiesService.findAll(symbol)
@@ -16,7 +16,7 @@ export class AssetDailiesController {
 
   @Post()
   create(
-    @Param()
+    @Param('symbol')
     symbol: string,
     @Body()
     { date, price }: Omit<CreateAssetDailyDto, 'symbol'>,

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import mongoose, { type HydratedDocument } from 'mongoose'
+import mongoose, { HydratedDocument } from 'mongoose'
 import { Asset } from './asset.entity'
 
 @Schema({ timestamps: true })

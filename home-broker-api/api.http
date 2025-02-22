@@ -65,3 +65,17 @@ GET http://localhost:3000/wallets/{{walletId}}
 ###
 # @name getWallets
 GET http://localhost:3000/wallets
+
+###
+# @name getAssets
+GET http://localhost:3000/assets
+
+###
+# @name getAssetDaily
+GET http://localhost:3000/assets/MSFT/dailies
+
+### 
+GET http://localhost:3000/assets/AAPL/dailies
+
+###
+GET http://localhost:3000/assets/GOOGL/dailies
